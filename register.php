@@ -85,6 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
+                $age = trim($_POST["age"]);
                 
             } else{
                 $error =  "Error intente luego.";
@@ -116,7 +117,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
-                
+                $name = trim($_POST["name"]);
                 /*if(mysqli_stmt_num_rows($stmt) == 1){
                     $username_err = "El usuario ya se enuentra registrado.";
                 } else{
@@ -153,6 +154,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
+                $gender = trim($_POST["gender"]);
                 
             } else{
                 $error =  "Error intente luego.";
@@ -185,6 +187,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
+                $email = trim($_POST["email"]);
                 
                 /*if(mysqli_stmt_num_rows($stmt) == 1){
                     $username_err = "El usuario ya se enuentra registrado.";
