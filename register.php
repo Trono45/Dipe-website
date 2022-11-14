@@ -3,8 +3,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = $nombres = $edad = $sexo = $email = "";
-$username_err = $password_err = $confirm_password_err = $nombres_err = $edad_err = $sexo_err = $email_err = $error = "";
+$username = $password = $confirm_password = $name = $age = $gender = $email = "";
+$username_err = $password_err = $confirm_password_err = $name_err = $age_err = $gender_err = $email_err = $error = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -66,10 +66,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Ingresar edad
     if(empty(trim($_POST["age"]))){
-        $edad_err = "Por favor ingrese una edad";
+        $age_err = "Por favor ingrese una edad";
         
     } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $edad_err = "La edad solo puede contener numeeros de 0 a 9";
+        $age_err = "La edad solo puede contener numeeros de 0 a 9";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE age = ?";
@@ -96,21 +96,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Ingresar nombre
-    if(empty(trim($_POST["nombres"]))){
-        $nombres_err = "Por favor ingrese el nombre";
+    if(empty(trim($_POST["name"]))){
+        $name_err = "Por favor ingrese el nombre";
         
-    } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["nombres"]))){
-        $nombres_err = "Los nombres solo deben incluir letras y guiones(_).";
+    } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
+        $name_err = "Los nombres solo deben incluir letras y guiones(_).";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE nombres = ?";
+        $sql = "SELECT id FROM users WHERE name = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_nombres);
+            mysqli_stmt_bind_param($stmt, "s", $param_name);
             
             // Set parameters
-            $param_nombres = trim($_POST["nombres"]);
+            $param_name = trim($_POST["name"]);
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -134,20 +134,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Ingresar genero
     if(empty(trim($_POST["gender"]))){
-        $sexo_err = "Por favor ingrese el genero";
+        $gender_err = "Por favor ingrese el genero";
         
     } elseif(!preg_match('/^[a-zA-Z]+$/', trim($_POST["gender"]))){
-        $sexo_err = "Los nombres solo deben incluir letras.";
+        $gender_err = "Los nombres solo deben incluir letras.";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE gender = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_sexo);
+            mysqli_stmt_bind_param($stmt, "s", $param_gender);
             
             // Set parameters
-            $param_sexo = trim($_POST["gender"]);
+            $param_gender = trim($_POST["gender"]);
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -201,21 +201,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($nombres_err) && empty($edad_err) && empty($sexo_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($name_err) && empty($age_err) && empty($gender_err) && empty($email_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, nombres, age, gender, email) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, password, name, age, gender, email) VALUES (?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_age, $param_nombres, $param_sexo, $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_age, $param_name, $param_gender, $param_email);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_age = $edad;
-            $param_nombres = $nombres;
-            $param_sexo = $sexo;
+            $param_age = $age;
+            $param_name = $name;
+            $param_gender = $gender;
             $param_email = $email;
             
             // Attempt to execute the prepared statement
@@ -275,13 +275,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="password" placeholder="Confirme la contraseña" name="confirm_password" class="main__input" value="<?php echo $confirm_password; ?>">
                     
                     <p class="main__paragraph2">Nombres:</p>
-                    <input type="text" placeholder="Ingrese los nombres" name="nombres" class="main__input" value="<?php echo $nombres; ?>">
+                    <input type="text" placeholder="Ingrese los nombres" name="name" class="main__input" value="<?php echo $name; ?>">
                     
                     <p class="main__paragraph2">Edad:</p>
-                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $edad; ?>">
+                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $age; ?>">
                     
                     <p class="main__paragraph2">Genero:</p>
-                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $sexo; ?>">
+                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $gender; ?>">
 
                     <p class="main__paragraph2">Email:</p>
                     <input type="text" placeholder="Ingrese el Email" name="email" class="main__input" value="<?php echo $email; ?>">
