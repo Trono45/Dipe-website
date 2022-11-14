@@ -57,7 +57,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Por favor confirme su contraseña";  
-    } else{$confirm_password = trim($_POST["confirm_password"]);
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Las contraseñas no coinciden";
         }
@@ -66,8 +67,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Ingresar edad
     if(empty(trim($_POST["age"]))){
         $edad_err = "Por favor ingrese una edad";
+        
     } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $edad_err = "La edad solo puede contener numeros de 0 a 9";
+        $edad_err = "La edad solo puede contener numeeros de 0 a 9";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE age = ?";
@@ -199,7 +201,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($nombres) && empty($edad) && empty($sexo) && empty($email)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($nombres_err) && empty($edad_err) && empty($sexo_err) && empty($email_err)){
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password, nombres, age, gender, email) VALUES (?, ?, ?, ?, ?, ?)";
@@ -211,9 +213,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_age = $age;
-            $param_nombres = $name;
-            $param_sexo = $gender;
+            $param_age = $edad;
+            $param_nombres = $nombres;
+            $param_sexo = $sexo;
             $param_email = $email;
             
             // Attempt to execute the prepared statement
@@ -273,13 +275,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="password" placeholder="Confirme la contraseña" name="confirm_password" class="main__input" value="<?php echo $confirm_password; ?>">
                     
                     <p class="main__paragraph2">Nombres:</p>
-                    <input type="text" placeholder="Ingrese los nombres" name="name" class="main__input" value="<?php echo $name; ?>">
+                    <input type="text" placeholder="Ingrese los nombres" name="nombres" class="main__input" value="<?php echo $nombres; ?>">
                     
                     <p class="main__paragraph2">Edad:</p>
-                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $age; ?>">
+                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $edad; ?>">
                     
                     <p class="main__paragraph2">Genero:</p>
-                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $gender; ?>">
+                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $sexo; ?>">
 
                     <p class="main__paragraph2">Email:</p>
                     <input type="text" placeholder="Ingrese el Email" name="email" class="main__input" value="<?php echo $email; ?>">
