@@ -57,8 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
         $confirm_password_err = "Por favor confirme su contraseña";  
-    } else{
-        $confirm_password = trim($_POST["confirm_password"]);
+    } else{$confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Las contraseñas no coinciden";
         }
@@ -67,7 +66,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Ingresar edad
     if(empty(trim($_POST["age"]))){
         $edad_err = "Por favor ingrese una edad";
-        
     } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
         $edad_err = "La edad solo puede contener numeros de 0 a 9";
     } else{
@@ -275,7 +273,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="password" placeholder="Confirme la contraseña" name="confirm_password" class="main__input" value="<?php echo $confirm_password; ?>">
                     
                     <p class="main__paragraph2">Nombres:</p>
-                    <input type="text" placeholder="Ingrese los nombres" name="nombres" class="main__input" value="<?php echo $name; ?>">
+                    <input type="text" placeholder="Ingrese los nombres" name="name" class="main__input" value="<?php echo $name; ?>">
                     
                     <p class="main__paragraph2">Edad:</p>
                     <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $age; ?>">
