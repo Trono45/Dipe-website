@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $edad_err = "Por favor ingrese una edad";
         
     } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $edad_err = "La edad solo puede contener numeeros de 0 a 9";
+        $edad_err = "La edad solo puede contener numeros de 0 a 9";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE age = ?";
@@ -213,9 +213,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_age = $edad;
-            $param_nombres = $nombres;
-            $param_sexo = $sexo;
+            $param_age = $age;
+            $param_nombres = $name;
+            $param_sexo = $gender;
             $param_email = $email;
             
             // Attempt to execute the prepared statement
@@ -275,13 +275,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="password" placeholder="Confirme la contraseña" name="confirm_password" class="main__input" value="<?php echo $confirm_password; ?>">
                     
                     <p class="main__paragraph2">Nombres:</p>
-                    <input type="text" placeholder="Ingrese los nombres" name="nombres" class="main__input" value="<?php echo $nombres; ?>">
+                    <input type="text" placeholder="Ingrese los nombres" name="nombres" class="main__input" value="<?php echo $name; ?>">
                     
                     <p class="main__paragraph2">Edad:</p>
-                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $edad; ?>">
+                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $age; ?>">
                     
                     <p class="main__paragraph2">Genero:</p>
-                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $sexo; ?>">
+                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $gender; ?>">
 
                     <p class="main__paragraph2">Email:</p>
                     <input type="text" placeholder="Ingrese el Email" name="email" class="main__input" value="<?php echo $email; ?>">
