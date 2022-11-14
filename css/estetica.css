@@ -1,3 +1,7 @@
+/*
+    Código adaptado por el código de AlexGC Design, video de youtube: https://youtu.be/HH_SMpxV7qQ
+*/
+
 *{
     margin: 0;
     padding: 0;
@@ -8,7 +12,7 @@ body {
 }
 .contenedor {
     padding: 100px 0;
-    width: 80%;
+    width: 90%;
     max-width: 1000px;
     margin: auto;
     overflow: hidden;
@@ -17,7 +21,7 @@ body {
     color: #642a73;
     font-size: 30px;
     text-align: center;
-    margin-bottom: 70px;
+    margin-bottom: 80px;
 }
 
 /* Header */
@@ -56,7 +60,7 @@ header .textos-header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    text-align: center;
+    text-align: justify;
 }
 
 .textos-header h1{
@@ -80,16 +84,16 @@ main .sobre-nosotros{
     padding: 30px 0 80px 0;
 }
 .contenedor-sobre-nosotros {
+    background: #f2f2f2;
     display: flex;
-    /*justify-content: space-evenly;*/
-    justify-content: baseline;
+    justify-content: space-evenly;
 }
 .imagen-about-us {
-    width: 15%;
+    width: 30%;
     display: flex;
 }
 .sobre-nosotros .contenido-textos{
-    width: 48%;
+    width: 58%;
     text-align: justify;
 }
 .contenido-textos h3{
@@ -121,7 +125,7 @@ main .sobre-nosotros{
 
 }
 .imagen-how-works {
-    width: 30%;
+    width: 60%;
 }
 .como-funciona .contenido-textos2{
     width: 48%;
