@@ -44,10 +44,11 @@ nav {
     padding: 30px 50px 0 0;
 }
 nav>a{
-    color: #ccc;
+    color: #fff;
     font-weight: 300;
     text-decoration: none;
-    margin-right: 10px;
+    margin-right: 10px;
+
 }
 nav>a:hover{
     text-decoration: underline;
