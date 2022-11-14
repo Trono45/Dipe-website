@@ -3,8 +3,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = $name = $age = $gender = $email = "";
-$username_err = $password_err = $confirm_password_err = $name_err = $age_err = $gender_err = $email_err = $error = "";
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = $error = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Por favor ingrese un ususario";
         
     } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
-        $username_err = "Los nombres de usuario solo deben incluir letras,numeros y guiones(_).";
+        $username_err = "los nombres de usuario solo deben incluir letras,numeros y guiones(_).";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
@@ -63,163 +63,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Las contraseñas no coinciden";
         }
     }
-
-    // Ingresar edad
-    if(empty(trim($_POST["age"]))){
-        $age_err = "Por favor ingrese una edad";
-        
-    } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $age_err = "La edad solo puede contener numeeros de 0 a 9";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE age = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_age);
-            
-            // Set parameters
-            $param_age = trim($_POST["age"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                $age = trim($_POST["age"]);
-                
-            } else{
-                $error =  "Error intente luego.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-
-    // Ingresar nombre
-    if(empty(trim($_POST["name"]))){
-        $name_err = "Por favor ingrese el nombre";
-        
-    } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
-        $name_err = "Los nombres solo deben incluir letras y guiones(_).";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE name = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_name);
-            
-            // Set parameters
-            $param_name = trim($_POST["name"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                $name = trim($_POST["name"]);
-                /*if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "El usuario ya se enuentra registrado.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }*/
-            } else{
-                $error =  "Error intente luego.";
-            }
-    
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-    
-    // Ingresar genero
-    if(empty(trim($_POST["gender"]))){
-        $gender_err = "Por favor ingrese el genero";
-        
-    } elseif(!preg_match('/^[a-zA-Z]+$/', trim($_POST["gender"]))){
-        $gender_err = "Los nombres solo deben incluir letras.";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE gender = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_gender);
-            
-            // Set parameters
-            $param_gender = trim($_POST["gender"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                $gender = trim($_POST["gender"]);
-                
-            } else{
-                $error =  "Error intente luego.";
-            }
-    
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-
-    // Ingresar un email
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Por favor ingrese un ususario";
-        
-    } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
-        $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE email = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
-            
-            // Set parameters
-            $param_email = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                $email = trim($_POST["email"]);
-                
-                /*if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "El usuario ya se enuentra registrado.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }*/
-            } else{
-                $error =  "Error intente luego.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($name_err) && empty($age_err) && empty($gender_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, name, age, gender, email) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_age, $param_name, $param_gender, $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_age = $age;
-            $param_name = $name;
-            $param_gender = $gender;
-            $param_email = $email;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -233,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-
+    
     // Close connection
     mysqli_close($link);
 }
@@ -276,18 +133,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     <p class="main__paragraph2">Confirmar contraseña:</p>
                     <input type="password" placeholder="Confirme la contraseña" name="confirm_password" class="main__input" value="<?php echo $confirm_password; ?>">
-                    
-                    <p class="main__paragraph2">Nombres:</p>
-                    <input type="text" placeholder="Ingrese los nombres" name="name" class="main__input" value="<?php echo $name; ?>">
-                    
-                    <p class="main__paragraph2">Edad:</p>
-                    <input type="text" placeholder="Ingrese la edad" name="age" class="main__input" value="<?php echo $age; ?>">
-                    
-                    <p class="main__paragraph2">Genero:</p>
-                    <input type="text" placeholder="Ingrese el genero" name="gender" class="main__input" value="<?php echo $gender; ?>">
-
-                    <p class="main__paragraph2">Email:</p>
-                    <input type="text" placeholder="Ingrese el Email" name="email" class="main__input" value="<?php echo $email; ?>">
 
                     <input type="submit" class="main__input main__input--send" value="Registrar">
                 </div>
