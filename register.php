@@ -98,8 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Ingresar nombre
     if(empty(trim($_POST["name"]))){
-        $name_err = "Por favor ingrese el nombre";
-        
+        $name_err = "Por favor ingrese el nombre";  
     } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
         $name_err = "Los nombres solo deben incluir letras y guiones(_).";
     } else{
@@ -118,10 +117,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
                 $name = trim($_POST["name"]);
-                /*if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "El usuario ya se enuentra registrado.";
-                } else{
-                    $username = trim($_POST["username"]);
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                     $name_err = "El usuario ya se enuentra registrado.";
+                 } else{
+                    $name = trim($_POST["username"]);
                 }*/
             } else{
                 $error =  "Error intente luego.";
@@ -260,11 +259,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="main__form">
                      <?php 
                             if(!empty($username_err)){
-                                        echo '<div class="alert">' . $username_err . '</div>';
+                                echo '<div class="alert">' . $username_err . '</div>';
                             }  else if(!empty($password_err)){
                                 echo '<div class="alert">' . $password_err . '</div>';
                             }  else if(!empty($confirm_password_err)){
                                 echo '<div class="alert">' . $confirm_password_err . '</div>';
+                            } else if(!empty($name_err)){
+                                echo '<div class="alert">' . $name_err . '</div>';
                             }
                         ?>
                         
