@@ -161,39 +161,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
-    // // Ingresar un email
-    // if(empty(trim($_POST["email"]))){
-    //     $email_err = "Por favor ingrese un ususario";
-    // } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
-    //     $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
-    // } else{
-    //     // Prepare a select statement
-    //     $sql = "SELECT id FROM users WHERE email = ?";
+     // Ingresar un email
+     if(empty(trim($_POST["email"]))){
+        $email_err = "Por favor ingrese un ususario";
+    } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
+        $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE email = ?";
         
-    //     if($stmt = mysqli_prepare($link, $sql)){
-    //         // Bind variables to the prepared statement as parameters
-    //         mysqli_stmt_bind_param($stmt, "s", $param_email);
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
             
-    //         // Set parameters
-    //         $param_email = trim($_POST["email"]);
+            // Set parameters
+            $param_email = trim($_POST["email"]);
             
-    //         // Attempt to execute the prepared statement
-    //         if(mysqli_stmt_execute($stmt)){
-    //             /* store result */
-    //             mysqli_stmt_store_result($stmt);
-    //             if(mysqli_stmt_num_rows($stmt) == 1){
-    //                 $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
-    //             } else{
-    //                 $email = trim($_POST["email"]);
-    //             }
-    //         } else{
-    //             $error =  "Error intente luego.";
-    //         }
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
+                } else{
+                    $email = trim($_POST["email"]);
+                }
+            } else{
+                $error =  "Error intente luego.";
+            }
 
-    //         // Close statement
-    //         mysqli_stmt_close($stmt);
-    //     }
-    // }
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
     
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($name_err) && empty($age_err) && empty($gender_err) && empty($email_err)){
