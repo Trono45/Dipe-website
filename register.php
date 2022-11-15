@@ -163,7 +163,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
      // Ingresar un email
      if(empty(trim($_POST["email"]))){
-        $email_err = "Por favor ingrese un ususario";
+        $email_err = "Por favor ingrese un correo electronico";
     } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
         $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
     } else{
