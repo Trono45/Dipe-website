@@ -78,19 +78,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            echo "<script>console.log('{pase 3}' );</script>";
-            echo "<script>console.log('{$param_username}' );</script>";
-            echo "<script>console.log('{$param_password}' );</script>";
+            echo "<script>console.log('{pas0 3}' );</script>";
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
                 echo "<script>console.log('{paso 4}' );</script>";
-                header("location: login.php");
+                header("location: index.html");
             } else{
                 $error = "error, por favor intente más tarde.";
                 echo "<script>console.log('{$error}' );</script>";
             }
-
+            echo "<script>console.log('{paso 5}' );</script>";
             // Close statement
             mysqli_stmt_close($stmt);
         }
