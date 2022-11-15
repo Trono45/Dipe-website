@@ -82,6 +82,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
 
             $bp = $stmt->execute();
+            echo "<script>console.log('{$bp}' );</script>";
             if ( false===$bp ) {
                 die('Error with execute: ' . htmlspecialchars($stmt->error));
                 echo "<script>console.log('{paso 3}' );</script>";
