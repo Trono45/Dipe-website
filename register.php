@@ -196,22 +196,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($name_err) && empty($age_err) && empty($gender_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, name, age, gender, email) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, password, name) VALUES (?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password,$param_name. $param_age, $param_gender, $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, param_username);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_name = $name;
-            $param_age = $age;
-            $param_gender = $gender;
-            $param_email = $email;
+            $param_username = $username;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -220,6 +217,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
                 $error = "error, por favor intente más tarde.";
             }
+
             // Close statement
             mysqli_stmt_close($stmt);
         }
