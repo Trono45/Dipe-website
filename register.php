@@ -70,7 +70,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         echo "<script>console.log('{paso2}' );</script>";
-        echo "<script>console.log('{$sql}' );</script>";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
@@ -78,19 +77,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            echo "<script>console.log('{pas0 3}' );</script>";
+            echo "<script>console.log('{paso 3}' );</script>";
+            // Attempt to execute the prepared statement
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                echo "<script>console.log('{paso 4}' );</script>";
-                header("location: index.html");
+                header("location: login.php");
+                echo "<script>console.log('{paso 3}' );</script>";
             } else{
                 $error = "error, por favor intente más tarde.";
-                echo "<script>console.log('{$error}' );</script>";
+                echo "<script>console.log('{paso 4}' );</script>";
             }
-            echo "<script>console.log('{paso 5}' );</script>";
             // Close statement
             mysqli_stmt_close($stmt);
+            echo "<script>console.log('{paso 5}' );</script>";
         }
     }
     
