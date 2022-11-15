@@ -61,139 +61,139 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Ingresar edad
-    if(empty(trim($_POST["age"]))){
-        $age_err = "Por favor ingrese una edad"; 
-    } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $age_err = "La edad solo puede contener numeneros del 0 a 9";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE age = ?";
+    // if(empty(trim($_POST["age"]))){
+    //     $age_err = "Por favor ingrese una edad"; 
+    // } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
+    //     $age_err = "La edad solo puede contener numeneros del 0 a 9";
+    // } else{
+    //     // Prepare a select statement
+    //     $sql = "SELECT id FROM users WHERE age = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_age);
+    //     if($stmt = mysqli_prepare($link, $sql)){
+    //         // Bind variables to the prepared statement as parameters
+    //         mysqli_stmt_bind_param($stmt, "s", $param_age);
             
-            // Set parameters
-            $param_age = trim($_POST["age"]);
+    //         // Set parameters
+    //         $param_age = trim($_POST["age"]);
             
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $age_err = "La edad solo puede contener numeeros.";
-                } else{
-                    $age = trim($_POST["age"]);
-                } 
-            } else{
-                $error =  "Error intente luego.";
-            }
+    //         // Attempt to execute the prepared statement
+    //         if(mysqli_stmt_execute($stmt)){
+    //             /* store result */
+    //             mysqli_stmt_store_result($stmt);
+    //             if(mysqli_stmt_num_rows($stmt) == 1){
+    //                 $age_err = "La edad solo puede contener numeeros.";
+    //             } else{
+    //                 $age = trim($_POST["age"]);
+    //             } 
+    //         } else{
+    //             $error =  "Error intente luego.";
+    //         }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
+    //         // Close statement
+    //         mysqli_stmt_close($stmt);
+    //     }
+    // }
 
-    // Ingresar nombre
-    if(empty(trim($_POST["name"]))){
-        $name_err = "Por favor ingrese el nombre";  
-    } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
-        $name_err = "Los nombres solo deben incluir letras y guiones(_).";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE name = ?";
+    // // Ingresar nombre
+    // if(empty(trim($_POST["name"]))){
+    //     $name_err = "Por favor ingrese el nombre";  
+    // } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
+    //     $name_err = "Los nombres solo deben incluir letras y guiones(_).";
+    // } else{
+    //     // Prepare a select statement
+    //     $sql = "SELECT id FROM users WHERE name = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_name);
+    //     if($stmt = mysqli_prepare($link, $sql)){
+    //         // Bind variables to the prepared statement as parameters
+    //         mysqli_stmt_bind_param($stmt, "s", $param_name);
             
-            // Set parameters
-            $param_name = trim($_POST["name"]);
+    //         // Set parameters
+    //         $param_name = trim($_POST["name"]);
             
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                     $name_err = "El usuario ya se enuentra registrado.";
-                 } else{
-                    $name = trim($_POST["name"]);
-                }
-            } else{
-                $error =  "Error intente luego.";
-            }
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
+    //         // Attempt to execute the prepared statement
+    //         if(mysqli_stmt_execute($stmt)){
+    //             /* store result */
+    //             mysqli_stmt_store_result($stmt);
+    //             if(mysqli_stmt_num_rows($stmt) == 1){
+    //                  $name_err = "El usuario ya se enuentra registrado.";
+    //              } else{
+    //                 $name = trim($_POST["name"]);
+    //             }
+    //         } else{
+    //             $error =  "Error intente luego.";
+    //         }
+    //         // Close statement
+    //         mysqli_stmt_close($stmt);
+    //     }
+    // }
     
-    // Ingresar genero
-    if(empty(trim($_POST["gender"]))){
-        $gender_err = "Por favor ingrese el genero";
-    } elseif(!preg_match('/^[a-zA-Z]+$/', trim($_POST["gender"]))){
-        $gender_err = "Los nombres solo deben incluir letras.";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE gender = ?";
+    // // Ingresar genero
+    // if(empty(trim($_POST["gender"]))){
+    //     $gender_err = "Por favor ingrese el genero";
+    // } elseif(!preg_match('/^[a-zA-Z]+$/', trim($_POST["gender"]))){
+    //     $gender_err = "Los nombres solo deben incluir letras.";
+    // } else{
+    //     // Prepare a select statement
+    //     $sql = "SELECT id FROM users WHERE gender = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_gender);
+    //     if($stmt = mysqli_prepare($link, $sql)){
+    //         // Bind variables to the prepared statement as parameters
+    //         mysqli_stmt_bind_param($stmt, "s", $param_gender);
             
-            // Set parameters
-            $param_gender = trim($_POST["gender"]);
+    //         // Set parameters
+    //         $param_gender = trim($_POST["gender"]);
             
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $gender_err = "Seleccione M - para Masculino y F - para Femenino";
-                } else{
-                   $gende = trim($_POST["gender"]);
-               }
-            } else{
-                $error =  "Error intente luego.";
-            }
+    //         // Attempt to execute the prepared statement
+    //         if(mysqli_stmt_execute($stmt)){
+    //             /* store result */
+    //             mysqli_stmt_store_result($stmt);
+    //             if(mysqli_stmt_num_rows($stmt) == 1){
+    //                 $gender_err = "Seleccione M - para Masculino y F - para Femenino";
+    //             } else{
+    //                $gende = trim($_POST["gender"]);
+    //            }
+    //         } else{
+    //             $error =  "Error intente luego.";
+    //         }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
+    //         // Close statement
+    //         mysqli_stmt_close($stmt);
+    //     }
+    // }
 
-    // Ingresar un email
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Por favor ingrese un ususario";
-    } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
-        $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE email = ?";
+    // // Ingresar un email
+    // if(empty(trim($_POST["email"]))){
+    //     $email_err = "Por favor ingrese un ususario";
+    // } elseif(!preg_match('/^[a-zA-Z0-9_.@]+$/', trim($_POST["email"]))){
+    //     $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
+    // } else{
+    //     // Prepare a select statement
+    //     $sql = "SELECT id FROM users WHERE email = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
+    //     if($stmt = mysqli_prepare($link, $sql)){
+    //         // Bind variables to the prepared statement as parameters
+    //         mysqli_stmt_bind_param($stmt, "s", $param_email);
             
-            // Set parameters
-            $param_email = trim($_POST["email"]);
+    //         // Set parameters
+    //         $param_email = trim($_POST["email"]);
             
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
-                } else{
-                    $email = trim($_POST["email"]);
-                }
-            } else{
-                $error =  "Error intente luego.";
-            }
+    //         // Attempt to execute the prepared statement
+    //         if(mysqli_stmt_execute($stmt)){
+    //             /* store result */
+    //             mysqli_stmt_store_result($stmt);
+    //             if(mysqli_stmt_num_rows($stmt) == 1){
+    //                 $email_err = "El email del usuario solo debe incluir letras, numeros, puntos y guiones(_).";
+    //             } else{
+    //                 $email = trim($_POST["email"]);
+    //             }
+    //         } else{
+    //             $error =  "Error intente luego.";
+    //         }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
+    //         // Close statement
+    //         mysqli_stmt_close($stmt);
+    //     }
+    // }
     
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($name_err) && empty($age_err) && empty($gender_err) && empty($email_err)){
