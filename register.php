@@ -80,14 +80,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "<script>console.log('{paso 3}' );</script>";
             // Attempt to execute the prepared statement
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
+
+            $bp = $stmt->execute();
+            if ( false===$bp ) {
+                die('Error with execute: ' . htmlspecialchars($stmt->error));
                 echo "<script>console.log('{paso 3}' );</script>";
-            } else{
-                $error = "error, por favor intente más tarde.";
+            }else{
+                header("location: login.php");
                 echo "<script>console.log('{paso 4}' );</script>";
             }
+
+            // if(mysqli_stmt_execute($stmt)){
+            //     // Redirect to login page
+            //     header("location: login.php");
+            //     echo "<script>console.log('{paso 3}' );</script>";
+            // } else{
+            //     $error = "error, por favor intente más tarde.";
+            //     echo "<script>console.log('{paso 4}' );</script>";
+            // }
             // Close statement
             mysqli_stmt_close($stmt);
             echo "<script>console.log('{paso 5}' );</script>";
