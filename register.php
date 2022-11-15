@@ -61,38 +61,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Ingresar edad
-    // if(empty(trim($_POST["age"]))){
-    //     $age_err = "Por favor ingrese una edad"; 
-    // } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-    //     $age_err = "La edad solo puede contener numeneros del 0 a 9";
-    // } else{
-    //     // Prepare a select statement
-    //     $sql = "SELECT id FROM users WHERE age = ?";
+    if(empty(trim($_POST["age"]))){
+        $age_err = "Por favor ingrese una edad"; 
+    } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
+        $age_err = "La edad solo puede contener numeneros del 0 a 9";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE age = ?";
         
-    //     if($stmt = mysqli_prepare($link, $sql)){
-    //         // Bind variables to the prepared statement as parameters
-    //         mysqli_stmt_bind_param($stmt, "s", $param_age);
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_age);
             
-    //         // Set parameters
-    //         $param_age = trim($_POST["age"]);
+            // Set parameters
+            $param_age = trim($_POST["age"]);
             
-    //         // Attempt to execute the prepared statement
-    //         if(mysqli_stmt_execute($stmt)){
-    //             /* store result */
-    //             mysqli_stmt_store_result($stmt);
-    //             if(mysqli_stmt_num_rows($stmt) == 1){
-    //                 $age_err = "La edad solo puede contener numeeros.";
-    //             } else{
-    //                 $age = trim($_POST["age"]);
-    //             } 
-    //         } else{
-    //             $error =  "Error intente luego.";
-    //         }
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $age_err = "La edad solo puede contener numeeros.";
+                } else{
+                    $age = trim($_POST["age"]);
+                } 
+            } else{
+                $error =  "Error intente luego.";
+            }
 
-    //         // Close statement
-    //         mysqli_stmt_close($stmt);
-    //     }
-    // }
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
 
     // // Ingresar nombre
     // if(empty(trim($_POST["name"]))){
