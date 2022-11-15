@@ -60,11 +60,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
+    // Ingresar nombre
+    if(empty(trim($_POST["name"]))){
+        $name_err = "Por favor ingrese el nombre";  
+    } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
+        $name_err = "Los nombres solo deben incluir letras y guiones(_).";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE name = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_name);
+            
+            // Set parameters
+            $param_name = trim($_POST["name"]);
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $name_err = "El usuario ya se enuentra registrado.";
+                } else{
+                    $name = trim($_POST["name"]);
+                }
+            } else{
+                $error =  "Error intente luego.";
+            }
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+
     // Ingresar edad
     if(empty(trim($_POST["age"]))){
         $age_err = "Por favor ingrese una edad"; 
     } elseif(!preg_match('/^[0-9]+$/', trim($_POST["age"]))){
-        $age_err = "La edad solo puede contener numeneros del 0 a 9";
+        $age_err = "La edad solo puede contener numeneros del 0 al 9";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE age = ?";
@@ -81,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
                 if(mysqli_stmt_num_rows($stmt) == 1){
-                    $age_err = "La edad solo puede contener numeeros.";
+                    $age_err = "La edad solo puede contener numeneros.";
                 } else{
                     $age = trim($_POST["age"]);
                 } 
@@ -93,39 +126,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-
-    // // Ingresar nombre
-    // if(empty(trim($_POST["name"]))){
-    //     $name_err = "Por favor ingrese el nombre";  
-    // } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["name"]))){
-    //     $name_err = "Los nombres solo deben incluir letras y guiones(_).";
-    // } else{
-    //     // Prepare a select statement
-    //     $sql = "SELECT id FROM users WHERE name = ?";
-        
-    //     if($stmt = mysqli_prepare($link, $sql)){
-    //         // Bind variables to the prepared statement as parameters
-    //         mysqli_stmt_bind_param($stmt, "s", $param_name);
-            
-    //         // Set parameters
-    //         $param_name = trim($_POST["name"]);
-            
-    //         // Attempt to execute the prepared statement
-    //         if(mysqli_stmt_execute($stmt)){
-    //             /* store result */
-    //             mysqli_stmt_store_result($stmt);
-    //             if(mysqli_stmt_num_rows($stmt) == 1){
-    //                  $name_err = "El usuario ya se enuentra registrado.";
-    //              } else{
-    //                 $name = trim($_POST["name"]);
-    //             }
-    //         } else{
-    //             $error =  "Error intente luego.";
-    //         }
-    //         // Close statement
-    //         mysqli_stmt_close($stmt);
-    //     }
-    // }
     
     // // Ingresar genero
     // if(empty(trim($_POST["gender"]))){
