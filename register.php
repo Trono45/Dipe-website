@@ -203,15 +203,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password,$param_name. $param_age, $param_gender, $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password,$param_username. $param_username, $param_username, $param_username);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_name = $name;
-            $param_age = $age;
-            $param_gender = $gender;
-            $param_email = $email;
+            $param_name = $username;
+            $param_age = $username;
+            $param_gender = $username;
+            $param_email = $username;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
