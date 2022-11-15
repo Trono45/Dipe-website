@@ -199,17 +199,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, name) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_name);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
             
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_name = $name;
-            echo "<script>console.log('{$name}' );</script>";
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
